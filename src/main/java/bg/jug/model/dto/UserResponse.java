@@ -5,9 +5,10 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class UserRequestDto {
+public class UserResponse {
+    private Integer id;
     private String username;
-    private String password; //TODO Check here ?????
     private String email;
     private String role;
+
 }
