@@ -1,6 +1,6 @@
 package bg.jug.service.impl;
 
-import bg.jug.model.dto.TopicDto;
+import bg.jug.model.dto.TopicResponse;
 import bg.jug.model.entity.Topic;
 import bg.jug.repository.TopicRepository;
 import bg.jug.service.TopicService;
@@ -18,11 +18,11 @@ private final TopicRepository topicRepository;
 private final ModelMapper mapper;
 
     @Override
-    public List<TopicDto> getAllTopics() {
+    public List<TopicResponse> getAllTopics() {
         List<Topic> topics = topicRepository.findAll();
 
         return topics.stream()
-                .map(t -> mapper.map(t, TopicDto.class))
+                .map(t -> mapper.map(t, TopicResponse.class))
                 .collect(Collectors.toList());
     }
 }

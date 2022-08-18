@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 @NoArgsConstructor
 @Data
-public class TopicDto {
+public class TopicResponse {
 
    private Integer id;
     private String title;

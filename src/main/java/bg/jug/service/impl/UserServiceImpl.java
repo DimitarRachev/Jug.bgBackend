@@ -1,8 +1,8 @@
 package bg.jug.service.impl;
 
 import bg.jug.model.AppUser;
-import bg.jug.model.dto.UserRequestDto;
-import bg.jug.model.dto.UserResponseDto;
+import bg.jug.model.dto.UserRequest;
+import bg.jug.model.dto.UserResponse;
 import bg.jug.model.entity.MyUser;
 import bg.jug.repository.UserRepository;
 import bg.jug.service.UserService;
@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,41 +45,41 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponseDto> getAll() {
+    public List<UserResponse> getAll() {
         List<MyUser> users = userRepository.findAll();
-        return users.stream().map(u -> mapper.map(u, UserResponseDto.class)).collect(Collectors.toList());
+        return users.stream().map(u -> mapper.map(u, UserResponse.class)).collect(Collectors.toList());
     }
 
     @Override
-    public int create(UserRequestDto userRequestDto) {
+    public int create(UserRequest userRequest) {
       MyUser user = new MyUser();
-      user.setUsername(userRequestDto.getUsername());
-      user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
-      user.setEmail(userRequestDto.getEmail());
-      user.setRole(userRequestDto.getRole());
+      user.setUsername(userRequest.getUsername());
+      user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+      user.setEmail(userRequest.getEmail());
+      user.setRole(userRequest.getRole());
       return userRepository.save(user).getId();
 
     }
 
     @Override
-    public UserResponseDto getByID(Integer id) {
-        return mapper.map(userRepository.getReferenceById(id), UserResponseDto.class);
+    public UserResponse getByID(Integer id) {
+        return mapper.map(userRepository.getReferenceById(id), UserResponse.class);
     }
 
     @Override
-    public UserResponseDto update(Integer id, UserRequestDto userRequestDto) {
+    public UserResponse update(Integer id, UserRequest userRequest) {
         MyUser user = userRepository.getReferenceById(id);
-        user.setUsername(userRequestDto.getUsername());
-        user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
-        user.setEmail(userRequestDto.getEmail());
-        user.setRole(userRequestDto.getRole());
-        return mapper.map( userRepository.save(user), UserResponseDto.class);
+        user.setUsername(userRequest.getUsername());
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        user.setEmail(userRequest.getEmail());
+        user.setRole(userRequest.getRole());
+        return mapper.map( userRepository.save(user), UserResponse.class);
     }
 
     @Override
-    public UserResponseDto delete(Integer id) {
+    public UserResponse delete(Integer id) {
        MyUser user = userRepository.getReferenceById(id);
-        UserResponseDto responseDto = mapper.map(user, UserResponseDto.class);
+        UserResponse responseDto = mapper.map(user, UserResponse.class);
         userRepository.deleteById(id);
         return responseDto;
     }

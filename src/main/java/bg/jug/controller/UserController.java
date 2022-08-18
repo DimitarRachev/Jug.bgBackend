@@ -1,7 +1,7 @@
 package bg.jug.controller;
 
-import bg.jug.model.dto.UserRequestDto;
-import bg.jug.model.dto.UserResponseDto;
+import bg.jug.model.dto.UserRequest;
+import bg.jug.model.dto.UserResponse;
 import bg.jug.service.UserService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -28,15 +28,15 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
-    public ResponseEntity<List<UserResponseDto>> getUsers() {
-        List<UserResponseDto> users = userService.getAll();
+    public ResponseEntity<List<UserResponse>> getUsers() {
+        List<UserResponse> users = userService.getAll();
         return ResponseEntity.ok(users);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Integer> createUser(@RequestBody UserRequestDto userRequestDto) {
-      int result =   userService.create(userRequestDto);
+    public ResponseEntity<Integer> createUser(@RequestBody UserRequest userRequest) {
+      int result =   userService.create(userRequest);
         return ResponseEntity.ok(result);
     }
 
@@ -44,7 +44,7 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity getUser(@PathVariable Integer id){
         try {
-            UserResponseDto user = userService.getByID(id);
+            UserResponse user = userService.getByID(id);
             return ResponseEntity.ok(user);
         }catch (EmptyResultDataAccessException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -53,9 +53,9 @@ public class UserController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity updateUser(@PathVariable Integer id, @RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity updateUser(@PathVariable Integer id, @RequestBody UserRequest userRequest) {
         try {
-            UserResponseDto user = userService.update(id, userRequestDto);
+            UserResponse user = userService.update(id, userRequest);
             return ResponseEntity.ok(user);
         } catch (EmptyResultDataAccessException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -66,7 +66,7 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity deleteUser(@PathVariable Integer id){
         try {
-            UserResponseDto user = userService.delete(id);
+            UserResponse user = userService.delete(id);
             return ResponseEntity.ok(user);
         } catch (EmptyResultDataAccessException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

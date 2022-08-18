@@ -1,25 +1,23 @@
 package bg.jug.service;
 
-import bg.jug.model.dto.UserRequestDto;
-import bg.jug.model.dto.UserResponseDto;
-import bg.jug.model.entity.MyUser;
+import bg.jug.model.dto.UserRequest;
+import bg.jug.model.dto.UserResponse;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
      UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
-    List<UserResponseDto> getAll();
+    List<UserResponse> getAll();
 
-    int create(UserRequestDto userRequestDto);
+    int create(UserRequest userRequest);
 
-    UserResponseDto getByID(Integer id);
+    UserResponse getByID(Integer id);
 
-    UserResponseDto update(Integer id, UserRequestDto requestDto);
+    UserResponse update(Integer id, UserRequest requestDto);
 
-    UserResponseDto delete(Integer id) ;
+    UserResponse delete(Integer id) ;
 }
