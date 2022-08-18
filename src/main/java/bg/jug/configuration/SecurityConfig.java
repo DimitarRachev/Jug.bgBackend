@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login", "/refreshToken")
+                .antMatchers("/login", "/refreshToken", "/topics")
                 .permitAll()
                 .antMatchers("/*")
                 .authenticated()
